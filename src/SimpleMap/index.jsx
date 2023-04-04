@@ -3,13 +3,19 @@ import GoogleMapReact from 'google-map-react';
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
+const mapOptions = {
+  "tilt": 45,
+  "heading": 0,
+  "mapId": import.meta.env.VITE_MAP_ID
+};
+
 export default function SimpleMap() {
   const [center, setCenter] = useState({
-    lat: 10.99835602,
-    lng: 77.01502627
+    lat: 48.858370,
+    lng: 2.294481
   });
 
-  const [zoom, setZoom] = useState(15);
+  const [zoom, setZoom] = useState(18);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -35,6 +41,7 @@ export default function SimpleMap() {
           bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_API_KEY }}
           center={center}
           zoom={zoom}
+          options={mapOptions}
         >
           <AnyReactComponent
             lat={59.955413}
