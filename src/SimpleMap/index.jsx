@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 import GoogleMapReact from 'google-map-react';
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+const AnyReactComponent = ({ text = "Vous êtes ici" }) => (
+  <div className="geoloc">
+    {text}
+  </div>
+);
 
 const mapOptions = {
   "tilt": 45,
   "heading": 0,
   "mapId": import.meta.env.VITE_MAP_ID
 };
+
+let geoloc = false;
 
 export default function SimpleMap() {
   const [center, setCenter] = useState({
@@ -19,6 +25,7 @@ export default function SimpleMap() {
 
   useEffect(() => {
     if (navigator.geolocation) {
+      geoloc = true;
       navigator.geolocation.getCurrentPosition(maPosition);
     } else {
       console.log("api pas dispo")
@@ -43,11 +50,12 @@ export default function SimpleMap() {
           zoom={zoom}
           options={mapOptions}
         >
-          <AnyReactComponent
-            lat={59.955413}
-            lng={30.337844}
-            text="My Marker"
-          />
+          {geoloc ? (
+            <AnyReactComponent
+              lat={center.lat}
+              lng={center.lng}
+            />
+          ) : null}
         </GoogleMapReact>
       </div>
     </>

@@ -1,8 +1,12 @@
+import SceneCard from "../SceneCard";
 
 export default function PersonnagesHistoriques() {
   return (
-    <p>
-      biographies et informations sur les personnages historiques les plus importants
-    </p>
+    <>
+      <p>
+        biographies et informations sur les personnages historiques les plus importants
+      </p>
+      <SceneCard />
+    </>
   );
 }
