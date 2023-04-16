@@ -1,10 +1,11 @@
 import { useState, useTransition } from 'react'
 import { useControls } from 'leva'
 import { Canvas } from '@react-three/fiber'
-import { DoubleSide, PlaneGeometry, TextureLoader } from 'three';
+import { BackSide, DoubleSide, FrontSide, PlaneGeometry, TextureLoader } from 'three';
 import { AccumulativeShadows, RandomizedLight, Center, Environment, OrbitControls } from '@react-three/drei'
 
-import cardTexture from '../assets/textureCard.jpg';
+import front from '../assets/front.jpg';
+import back from '../assets/back.jpg';
 
 const SceneCard = () => {
   return (
@@ -35,15 +36,21 @@ const SceneCard = () => {
 // }
 
 function Card() {
-  const [textureRecto] = useState(() => new TextureLoader().load(cardTexture));
-  const [textureVerso] = useState(() => new TextureLoader().load(cardTexture));
+  const [textureRecto] = useState(() => new TextureLoader().load(front));
+  const [textureVerso] = useState(() => new TextureLoader().load(back));
+
   return (
     <Center top>
-      <mesh castShadow>
-        <planeGeometry args={[2.5, 3.5]} />
-        <meshStandardMaterial map={textureRecto} side={DoubleSide} />
-        <meshStandardMaterial map={textureVerso} side={DoubleSide} />
-      </mesh>
+      <group>
+        <mesh position={[0, 0, 0.01]} castShadow>
+          <planeGeometry args={[2.5, 3.5]} />
+          <meshStandardMaterial map={textureRecto} side={DoubleSide} />
+        </mesh>
+        <mesh position={[0, 0, -0.01]} castShadow>
+          <planeGeometry args={[2.5, 3.5]} />
+          <meshStandardMaterial map={textureVerso} side={DoubleSide} />
+        </mesh>
+      </group>
     </Center>
   );
 }
